@@ -26,8 +26,19 @@
                 <td><%= @book.body %></td>
                 <% if @book.user.id == current_user.id %>
                   <td><%= link_to "Edit", edit_book_path %></td>
-                  <td><%= link_to "Destroy",book_path, method: :delete %></td><br>
+                  <td><%= link_to "Destroy",book_path, method: :delete %></td>
                 <% end %>
+                <td>
+                  <% if @book.favorited_by?(current_user) %>
+                  <%= link_to book_favorites_path(@book), method: :delete do %>
+                    ♥<%= @book.favorites.count %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to book_favorites_path(@book), method: :post do %>
+                      ♡<%= @book.favorites.count %>
+                    <% end %>
+                  <% end %>
+                </td><br>
               </tr>
           </tbody>
         </table>
